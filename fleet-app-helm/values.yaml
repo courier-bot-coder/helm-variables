@@ -1,25 +1,4 @@
-#THIS WORKED FOR MONGODB
-# replicaCount: 1
-# mongodb:
-#   name: mongodb
-#   namespace: default
-#   containers:
-#     image: mongo:3.6.5-jessie
-#   volumeMounts:
-#       name: mongo-persistent-storage
-#       mountPath: /data/db
-#   volumes:
-#       name: mongo-persistent-storage
-#       persistentVolumeClaim:
-#         claimName: mongo-pvc
-# fleetman_mongodb:
-#     name: fleetman-mongodb
-#     namespace: default
-#     ports:
-#         name: http
-#         port: 27017
-#         targetPort: 27017
-#     type: ClusterIP
+
 replicaCount: 1
 positionSimulator:
    name: position-simulator
