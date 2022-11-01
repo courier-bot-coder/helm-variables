@@ -10,7 +10,7 @@ spec:
   selector:
     matchLabels:
       app: {{ .Values.webapp.name }}
-  replicas: 1
+  replicas: {{ .Values.webapp.replicas }}
   template:
     metadata:
       namespace: default
