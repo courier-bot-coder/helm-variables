@@ -7,7 +7,7 @@ spec:
   selector:
     matchLabels:
       app: {{ .Values.queue.name }}
-  replicas: 1
+  replicas: {{ .Values.queue.replicas }}
   template:
     metadata:
       namespace: default
