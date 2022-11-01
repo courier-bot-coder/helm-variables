@@ -10,7 +10,7 @@ spec:
   selector:
     matchLabels:
       app: {{ .Values.apiGateway.name }}
-  replicas: 1
+  replicas: {{ .Values.apiGateway.replicas }}
   template:
     metadata:
       namespace: default
