@@ -3,11 +3,13 @@ replicaCount: 1
 positionSimulator:
    name: position-simulator
    namespace: default
+   replicas: 2
    container: 
     image: richardchesterwood/k8s-fleetman-position-simulator:release2
 positionTracker:      
   name: position-tracker
   namespace: default
+  replicas: 1
   containers:
     image: richardchesterwood/k8s-fleetman-position-tracker:release3
   service:
@@ -18,6 +20,7 @@ positionTracker:
 webapp:
   name: webapp
   namespace: default
+  replicas: 1
   containers:
     image: richardchesterwood/k8s-fleetman-webapp-angular:release2
 fleetmanWebapp:
@@ -31,6 +34,7 @@ fleetmanWebapp:
 apiGateway:
   name: api-gateway
   namespace: default
+  replicas: 1
   containers:
     image: richardchesterwood/k8s-fleetman-api-gateway:release2
 fleetmanApiGateway:
@@ -44,6 +48,7 @@ fleetmanApiGateway:
 mongodb:
   name: mongodb
   namespace: default
+  replicas: 1
   containers:
     image: mongo:3.6.5-jessie
   volumeMounts:
@@ -64,6 +69,7 @@ fleetmanMongodb:
 queue:
   name: queue
   namespace: default
+  replicas: 1
   containers:
     image: richardchesterwood/k8s-fleetman-queue:release2
 fleetmanQueue:
