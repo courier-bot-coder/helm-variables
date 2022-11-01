@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       app: {{ .Values.mongodb.name }}
-  replicas: 1
+  replicas: {{ .Values.mongodb.replicas }}
   template:
     metadata:
       namespace: default
@@ -21,9 +21,7 @@ spec:
           image: {{ .Values.mongodb.containers.image}}
           volumeMounts:
             - name: {{ .Values.mongodb.volumeMounts.name }}
-              # Directory in the container to mount volume
               mountPath: /data/db
-      # volume doc: https://kubernetes.io/docs/reference/kubernetes-api/config-and-storage-resources/volume/
       volumes:
         - name: {{ .Values.mongodb.volumeMounts.name }}
           persistentVolumeClaim:
