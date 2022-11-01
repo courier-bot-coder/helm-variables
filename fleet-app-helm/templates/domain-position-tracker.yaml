@@ -1,0 +1,85 @@
+
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: {{ .Values.positionTracker.name }}
+#   namespace: default
+# spec:
+#   selector:
+#     matchLabels:
+#       app: {{ .Values.positionTracker.name }}
+#   replicas: 1
+#   template:
+#     metadata:
+#       namespace: default
+#       labels:
+#         app: {{ .Values.positionTracker.name }}
+#     spec:
+#       containers:
+#       - name: {{ .Values.positionTracker.name }}
+#         image: richardchesterwood/k8s-fleetman-position-tracker:release3
+#         env:
+#         - name: SPRING_PROFILES_ACTIVE
+#           value: production-microservice
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: {{ .Values.positionTracker.name }}
+#   namespace: default
+# spec:
+#   selector:
+#     app: {{ .Values.positionTracker.name }}
+#   # ports:
+#   #   - name: http
+#   #     port: 80
+#   #     targetPort: 8080
+#   # type: LoadBalancer
+#   ports:
+#     - name: {{ .Values.positionTracker.service.ports.name }}
+#       port: {{ .Values.positionTracker.service.ports.port }}
+
+#   type: {{ .Values.positionTracker.service.type }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.positionTracker.name }}
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.positionTracker.name }}
+  replicas: 1
+  template:
+    metadata:
+      namespace: default
+      labels:
+        app: {{ .Values.positionTracker.name }}
+    spec:
+      containers:
+      - name: {{ .Values.positionTracker.name }}
+        image: {{ .Values.positionTracker.containers.image }}
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: production-microservice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fleetman-position-tracker
+  namespace: default
+spec:
+  selector:
+    app: {{ .Values.positionTracker.name }}
+  # ports:
+  #   - name: http
+  #     port: 80
+  #     targetPort: 8080
+  # type: LoadBalancer
+  ports:
+    - name: {{ .Values.positionTracker.service.ports.name }}
+      port: {{ .Values.positionTracker.service.ports.port }}
+
+  type: ClusterIP

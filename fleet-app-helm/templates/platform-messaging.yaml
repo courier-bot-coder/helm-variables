@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.queue.name }}
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.queue.name }}
+  replicas: 1
+  template:
+    metadata:
+      namespace: default
+      labels:
+        app: {{ .Values.queue.name }}
+    spec:
+      containers:
+      - name: {{ .Values.queue.name }}
+        image: {{ .Values.queue.containers.image }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.fleetmanQueue.name }}
+  namespace: default
+spec:
+  selector:
+    app: {{ .Values.queue.name }}
+  ports:
+    - name: {{ .Values.fleetmanQueue.ports.name }}
+      port: {{ .Values.fleetmanQueue.ports.port }}
+      targetPort: {{ .Values.fleetmanQueue.ports.targetPort }}
+    - name: {{ .Values.fleetmanQueue.ports.name2 }}
+      port: {{ .Values.fleetmanQueue.ports.port2 }}
+  type: LoadBalancer

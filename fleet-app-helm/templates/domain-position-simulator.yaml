@@ -1,0 +1,24 @@
+# this works
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.positionSimulator.name }}
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.positionSimulator.name }}
+  replicas: 2
+  template:
+    metadata:
+      namespace: default
+      labels:
+        app: {{ .Values.positionSimulator.name }}
+    spec:
+      containers:
+      - name: {{ .Values.positionSimulator.name }}
+        image: {{ .Values.positionSimulator.container.image}}
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: production-microservice

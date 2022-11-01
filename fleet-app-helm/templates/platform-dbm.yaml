@@ -1,0 +1,44 @@
+# this works
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.mongodb.name }}
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.mongodb.name }}
+  replicas: 1
+  template:
+    metadata:
+      namespace: default
+      labels:
+        app: {{ .Values.mongodb.name }}
+    spec:
+      containers:
+        - name: {{ .Values.mongodb.name }}
+          image: {{ .Values.mongodb.containers.image}}
+          volumeMounts:
+            - name: {{ .Values.mongodb.volumeMounts.name }}
+              # Directory in the container to mount volume
+              mountPath: /data/db
+      # volume doc: https://kubernetes.io/docs/reference/kubernetes-api/config-and-storage-resources/volume/
+      volumes:
+        - name: {{ .Values.mongodb.volumeMounts.name }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.mongodb.volumes.persistentVolumeClaim.claimName }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.fleetmanMongodb.name }}
+  namespace: default
+spec:
+  selector:
+    app: {{ .Values.mongodb.name }}
+  ports:
+    - name: {{ .Values.fleetmanMongodb.ports.name }}
+      port: {{ .Values.fleetmanMongodb.ports.port }}
+      targetPort: {{ .Values.fleetmanMongodb.ports.targetPort }}
+  type: ClusterIP
