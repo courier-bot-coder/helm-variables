@@ -1,5 +1,4 @@
-# this works
-# This YAML did not work with MetalLB because the fleetman-queue service had two ports - I am guessing that MetalLB did not know what to do with the 2nd port
+
 ---
 apiVersion: apps/v1
 kind: Deployment
